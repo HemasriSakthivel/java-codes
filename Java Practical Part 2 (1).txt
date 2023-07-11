@@ -1,0 +1,641 @@
+
+
+11)
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int maxSize = scanner.nextInt();
+        Stack<Integer> stack = new Stack<>();
+
+        while (true) {
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    int element = scanner.nextInt();
+                    if (stack.size() < maxSize) {
+                        stack.push(element);
+                        System.out.println("Element " + element + " pushed to stack");
+                    } else {
+                        System.out.println("Error: Stack is full");
+                    }
+                    break;
+                case 2:
+                    if (!stack.isEmpty()) {
+                        int poppedElement = stack.pop();
+                        System.out.println("Element " + poppedElement + " popped from stack");
+                    } else {
+                        System.out.println("Error: Stack is empty");
+                    }
+                    break;
+                case 3:
+                    if (!stack.isEmpty()) {
+                        int peekedElement = stack.peek();
+                        System.out.println("Element at top of stack is " + peekedElement);
+                    } else {
+                        System.out.println("Error: Stack is empty");
+                    }
+                    break;
+                case 4:
+                    int size = stack.size();
+                    System.out.println("Stack size is " + size);
+                    break;
+                case 5:
+                    boolean isEmpty = stack.isEmpty();
+                    System.out.println("Stack is " + (isEmpty ? "empty" : "not empty"));
+                    break;
+                case 6:
+                    boolean isFull = (stack.size() == maxSize);
+                    System.out.println("Stack is " + (isFull ? "full" : "not full"));
+                    break;
+                case 7:
+                    System.out.println("Exiting program...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println();
+        }
+    }
+}
+-------------------------
+12)
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Get user input for S1
+        String s1 = scanner.nextLine();
+
+        // Get user input for S2
+        String s2 = scanner.nextLine();
+
+        // Remove all occurrences of s2 in s1
+        String result = s1.replaceAll(s2, "");
+
+        // Print the resulting string
+        System.out.println(result);
+    }
+}
+-----------------------
+13)
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String filename = scanner.nextLine();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            String line;
+            while (!(line = scanner.nextLine()).isEmpty()) {
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("Contents written to file successfully!");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+            return;
+        }
+
+        String copyFilename = scanner.nextLine();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(copyFilename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("File contents copied successfully!");
+        } catch (IOException e) {
+            System.out.println("Error copying file: " + e.getMessage());
+            return;
+        }
+
+        String displayFilename = scanner.nextLine();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(displayFilename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+}
+---------------------------
+14)
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+
+        Map<Character, Integer> charFrequency = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            if (charFrequency.containsKey(c)) {
+                charFrequency.put(c, charFrequency.get(c) + 1);
+            } else {
+                charFrequency.put(c, 1);
+            }
+        }
+
+        int uniquePermutations = factorial(s.length());
+        for (int count : charFrequency.values()) {
+            uniquePermutations /= factorial(count);
+        }
+
+        System.out.println(uniquePermutations);
+    }
+
+    private static int factorial(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+}
+-----------------------------------------
+15)
+import java.util.Scanner;
+
+abstract class Shape {
+    int dimension1;
+
+    public abstract void printArea();
+
+    public abstract void numberOfSides();
+}
+
+class Rectangle extends Shape {
+    int dimension2;
+
+    public void printArea() {
+        int area = dimension1 * dimension2;
+        System.out.println("The area of the Rectangle is: " + area);
+    }
+
+    public void numberOfSides() {
+        System.out.println("The Rectangle has 4 sides");
+    }
+}
+
+class Triangle extends Shape {
+    int dimension2;
+
+    public void printArea() {
+        double area = 0.5 * dimension1 * dimension2;
+        System.out.println("The area of the Triangle is: " + area);
+    }
+
+    public void numberOfSides() {
+        System.out.println("The Triangle has 3 sides");
+    }
+}
+
+class Circle extends Shape {
+    public void printArea() {
+        double area = 3.14 * dimension1 * dimension1;
+        System.out.println("The area of the Circle is: " + area);
+    }
+
+    public void numberOfSides() {
+        System.out.println("The Circle has 0 sides");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Rectangle rect = new Rectangle();
+        rect.dimension1 = sc.nextInt();
+        rect.dimension2 = sc.nextInt();
+        rect.printArea();
+        rect.numberOfSides();
+
+        Triangle tri = new Triangle();
+        tri.dimension1 = sc.nextInt();
+        tri.dimension2 = sc.nextInt();
+        tri.printArea();
+        tri.numberOfSides();
+
+        Circle cir = new Circle();
+        cir.dimension1 = sc.nextInt();
+        cir.printArea();
+        cir.numberOfSides();
+
+        sc.close();
+    }
+}
+-----------------------------
+16)
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Scanner input = new Scanner(System.in);
+        
+        int rows = input.nextInt();
+
+        int columns = input.nextInt();
+
+        int[][] matrix1 = new int[rows][columns];
+        int[][] matrix2 = new int[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                matrix1[i][j] = input.nextInt();
+            }
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                matrix2[i][j] = input.nextInt();
+            }
+        }
+        int[][] sum = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                sum[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+        int[][] diff = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                diff[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        }
+        
+        int[][] product = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                for (int k = 0; k < columns; k++) {
+                    product[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+
+        System.out.println("Matrix 1: ");
+        displayMatrix(matrix1);
+        
+        System.out.println("Matrix 2: ");
+        displayMatrix(matrix2);
+        
+        System.out.println("Matrix Sum: ");
+        displayMatrix(sum);
+        
+        System.out.println("Matrix Difference: ");
+        displayMatrix(diff);
+        
+        System.out.println("Matrix Product: ");
+        displayMatrix(product);
+        
+        input.close();
+    }
+
+    public static void displayMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+}
+-------------------------------------------------
+17)
+// You are using Java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+ class RowInsertExample{
+	public static void main(String args[]) throws Exception{
+		String url="jdbc:mysql://localhost/ri_db";
+		String username ="test";
+		String password ="test123";
+		String query = "INSERT INTO STUDENT (id,name,average_marks) VALUES (?,?,?);";
+		
+		Scanner sc =new Scanner(System.in);
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection(url,username,password);
+		PreparedStatement st = con.prepareStatement(query);
+		
+		int n =Integer.parseInt(sc.nextLine());
+		
+		for(int i=0;i<n;i++) {
+			int id=Integer.parseInt(sc.nextLine());
+			String name =sc.nextLine();
+			int average_marks = Integer.parseInt(sc.nextLine());
+			st.setInt(1,id);
+			st.setString(2,name);
+			st.setInt(3,average_marks);
+			st.executeUpdate();
+		}
+		
+		ResultSet rs =  st.executeQuery("select *from STUDENT");
+		while(rs.next()) {
+			System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getInt(3));
+		}
+		st.close();
+		con.close();
+	}
+}
+
+---------------------------------------
+18)
+Main.java:
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            choice = scanner.nextInt();
+            String empName, address, mailID;
+            int empID;
+            long mobileNo;
+            double basicPay;
+            switch (choice) {
+                case 1:
+                    empName = scanner.next();
+                    empID = scanner.nextInt();
+                    address = scanner.next();
+                    mailID = scanner.next();
+                    mobileNo = scanner.nextLong();
+                    basicPay = scanner.nextDouble();
+                    Programmer p = new Programmer(empName, empID, address, mailID, mobileNo, basicPay);
+                    p.generatePaySlip();
+                    break;
+                case 2:
+                    empName = scanner.next();
+                    empID = scanner.nextInt();
+                    address = scanner.next();
+                    mailID = scanner.next();
+                    mobileNo = scanner.nextLong();
+                    basicPay = scanner.nextDouble();
+                    AssistantProfessor ap = new AssistantProfessor(empName, empID, address, mailID, mobileNo, basicPay);
+                    ap.generatePaySlip();
+                    break;
+                case 3:
+                    empName = scanner.next();
+                    empID = scanner.nextInt();
+                    address = scanner.next();
+                    mailID = scanner.next();
+                    mobileNo = scanner.nextLong();
+                    basicPay = scanner.nextDouble();
+                    AssociateProfessor asp = new AssociateProfessor(empName, empID, address, mailID, mobileNo, basicPay);
+                    asp.generatePaySlip();
+                    break;
+                case 4:
+                    empName = scanner.next();
+                    empID = scanner.nextInt();
+                    address = scanner.next();
+                    mailID = scanner.next();
+                    mobileNo = scanner.nextLong();
+                    basicPay = scanner.nextDouble();
+                    Professor pr = new Professor(empName, empID, address, mailID, mobileNo, basicPay);
+                    pr.generatePaySlip();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        } while (choice != 5);
+        scanner.close();
+    }
+}
+
+
+Employee.java:
+public class Employee {
+    String emp_name;
+    int emp_id;
+    String address;
+    String mail_id;
+    long mobile_no;
+    double basic_pay;
+
+    public Employee(String emp_name, int emp_id, String address, String mail_id, long mobile_no, double basic_pay) {
+        this.emp_name = emp_name;
+        this.emp_id = emp_id;
+        this.address = address;
+        this.mail_id = mail_id;
+        this.mobile_no = mobile_no;
+        this.basic_pay = basic_pay;
+    }
+
+    public void generatePaySlip() {
+        double da = 0.97 * basic_pay;
+        double hra = 0.1 * basic_pay;
+        double pf = 0.12 * basic_pay;
+        double staff_fund = 0.001 * basic_pay;
+        double gross_salary = basic_pay + da + hra;
+        double net_salary = gross_salary - pf - staff_fund;
+
+        
+        System.out.println("Pay Slip for Employee ID: " + emp_id);
+        System.out.println("Employee Name: " + emp_name);
+        System.out.println("Address: " + address);
+        System.out.println("Email ID: " + mail_id);
+        System.out.println("Mobile Number: " + mobile_no);
+        System.out.println("Basic Pay: " + basic_pay);
+        System.out.println("DA (97% of Basic Pay): " + da);
+        System.out.println("HRA (10% of Basic Pay): " + hra);
+        System.out.println("PF (12% of Basic Pay): " + pf);
+        System.out.println("Staff Club Fund (0.1% of Basic Pay): " + staff_fund);
+        System.out.println("\nGross Salary: " + gross_salary);
+        System.out.println("Net Salary: " + net_salary);
+
+    }
+}
+
+Programmer.java:
+public class Programmer extends Employee {
+    public Programmer(String emp_name, int emp_id, String address, String mail_id, long mobile_no, double basic_pay) {
+        super(emp_name, emp_id, address, mail_id, mobile_no, basic_pay);
+    }
+}
+
+
+AssistantProfessor.java:
+public class AssistantProfessor extends Employee {
+    public AssistantProfessor(String emp_name, int emp_id, String address, String mail_id, long mobile_no, double basic_pay) {
+        super(emp_name, emp_id, address, mail_id, mobile_no, basic_pay);
+    }
+}
+
+AssociateProfessor.java:
+public class AssociateProfessor extends Employee {
+    public AssociateProfessor(String emp_name, int emp_id, String address, String mail_id, long mobile_no, double basic_pay) {
+        super(emp_name, emp_id, address, mail_id, mobile_no, basic_pay);
+    }
+}
+
+Professor.java:
+public class Professor extends Employee {
+    public Professor(String emp_name, int emp_id, String address, String mail_id, long mobile_no, double basic_pay) {
+        super(emp_name, emp_id, address, mail_id, mobile_no, basic_pay);
+    }
+}
+
+---------------------------------------
+19)
+import java.util.Scanner;
+class AgeNotWithInRangeException extends Exception
+{
+     public String toString()
+     {
+          return ("Age is not between 15 and 21");
+     }
+}
+
+class NameNotValidException extends Exception
+{
+     public String toString()
+     {
+          return ("Name is not Valid");
+     }
+}
+
+class Student
+{
+     int roll,age;
+     String name,course;
+     Student()
+     {
+          roll=0;
+          name=null;
+          age=0;
+          course=null;
+     }
+     Student(int r,String n,int a,String c)
+     {
+          roll=r;
+          course=c;
+          int l,temp=0;
+          l = n.length();
+          for(int i=0;i<l;i++)
+          {
+               char ch;
+               ch=n.charAt(i);
+               if(ch<'A' || ch>'Z' && ch<'a' || ch>'z')
+                    temp=1;
+          }
+         
+          try
+          {
+               if(temp==1) {
+            	name=n;   
+                 throw new NameNotValidException();
+               }
+               else
+                    name=n;
+          }
+          catch(NameNotValidException e2)
+          {
+               System.out.println(e2);
+          }
+         
+          try
+          {
+               if(a>=15 && a<=21)
+                    age=a;
+               else {
+            	   age=a;
+               
+                    throw new AgeNotWithInRangeException();
+               }
+          }
+          catch(AgeNotWithInRangeException e1)
+          {
+               System.out.println(e1);
+          }
+     }
+     void display()
+     {
+    	 
+          System.out.println(roll+" "+name+" "+age+" " +course);
+     }
+}
+
+class StudentDemo
+{
+    public static void main(String args[])
+    {
+    	Scanner br =new Scanner(System.in);
+        int roll = Integer.parseInt(br.nextLine());
+        String name = br.nextLine();
+        int age = Integer.parseInt(br.nextLine());
+        String course = br.nextLine();
+        Student s = new Student(roll,name,age,course);
+        s.display();
+    }
+}
+-----------------------------------------------------
+20)
+// You are using Java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            int num1 = scanner.nextInt();
+            char operator = scanner.next().charAt(0);
+            int num2 = scanner.nextInt();
+            int result;
+
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 == 0)
+                        throw new ArithmeticException("Division by zero");
+                    result = num1 / num2;
+                    break;
+                default:
+                    throw new IllegalArgumentException("The operator is not valid");
+            }
+
+            System.out.println(result);
+        } catch (IllegalArgumentException | ArithmeticException e) {
+            System.out.println("Exception : " + e.getMessage());
+        }
+
+        scanner.close();
+    }
+}
+----------------------------------------------
+
+CobaltCrawlerΣ
